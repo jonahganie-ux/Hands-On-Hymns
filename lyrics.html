@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Read the lyric page for a Hands-On Hymns song.">
+	<meta name="theme-color" content="#193f70">
+	<title>Lyrics | Hands-On Hymns</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/songs.js" defer></script>
+	<script src="js/script.js" defer></script>
+</head>
+<body>
+	<header class="site-header">
+		<a class="brand" href="index.html" aria-label="Hands-On Hymns home">
+			<span class="brand-mark" aria-hidden="true">H</span>
+			<span class="brand-name">Hands-On <strong>Hymns</strong></span>
+		</a>
+		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+			<span class="sr-only">Toggle navigation</span><span></span><span></span>
+		</button>
+		<nav class="site-nav" id="site-nav" data-site-nav aria-label="Main navigation">
+			<a class="nav-link" href="index.html">Home</a>
+			<a class="nav-link is-current" href="songs.html" aria-current="page">Songbook</a>
+			<a class="nav-link" href="about.html">About us</a>
+			<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to red color theme" title="Switch color theme">
+				<span class="theme-swatches" aria-hidden="true"><i></i><i></i></span><span data-theme-label>Blue</span>
+			</button>
+			<a class="nav-cta" href="songs.html#song-list">Explore songs <span aria-hidden="true">↗</span></a>
+		</nav>
+	</header>
+
+	<main class="page-shell lyric-page">
+		<nav aria-label="Breadcrumb" class="song-crumbs">
+			<a href="songs.html">Songbook</a>
+			<span aria-hidden="true">/</span>
+			<span data-song-breadcrumb>Song</span>
+		</nav>
+
+		<section class="lyric-shell" aria-live="polite">
+			<div class="lyric-intro">
+				<p class="eyebrow"><span class="eyebrow-dot"></span> Hands-On Hymns song</p>
+				<h1 data-song-title>Loading song…</h1>
+				<p class="lyric-meta">Songbook page <span data-song-page>—</span></p>
+			</div>
+
+			<div class="lyric-actions">
+				<a class="button button-green" href="songs.html">← Back to songbook</a>
+			</div>
+
+			<article class="lyric-card">
+				<div class="lyric-body" data-song-lyrics></div>
+			</article>
+		</section>
+	</main>
+
+	<footer class="site-footer page-shell">
+		<a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">H</span><span class="brand-name">Hands-On <strong>Hymns</strong></span></a>
+		<p>Made to keep our songs close.</p>
+		<span class="footer-copy">© <span data-current-year>2026</span> Hands-On Hymns</span>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const lyricSongs = window.HYMN_SONGS || [];
+			const lyricTitleElement = document.querySelector('[data-song-title]');
+			const lyricPageElement = document.querySelector('[data-song-page]');
+			const lyricBreadcrumbElement = document.querySelector('[data-song-breadcrumb]');
+			const lyricContainer = document.querySelector('[data-song-lyrics]');
+			const lyricSlug = new URLSearchParams(window.location.search).get('song');
+			const lyricSong = lyricSongs.find((entry) => entry.slug === lyricSlug) || lyricSongs[0];
+
+			if (lyricTitleElement && lyricSong) {
+				lyricTitleElement.textContent = lyricSong.title;
+			}
+			if (lyricPageElement && lyricSong) {
+				lyricPageElement.textContent = String(lyricSong.page);
+			}
+			if (lyricBreadcrumbElement && lyricSong) {
+				lyricBreadcrumbElement.textContent = lyricSong.title;
+			}
+			if (lyricContainer) {
+				const lyricLines = Array.isArray(lyricSong?.lyrics) && lyricSong.lyrics.length > 0
+					? lyricSong.lyrics
+					: [
+						'This song is in the ministry collection.',
+						'The full lyrics will be added from the printed hymn book soon.'
+					];
+				let inReferenceSection = false;
+				lyricContainer.innerHTML = lyricLines.map((line) => {
+					const trimmed = String(line || '').trim();
+					if (!trimmed) {
+						inReferenceSection = false;
+						return '<p class="lyric-line">&nbsp;</p>';
+					}
+					if (trimmed.toLowerCase() === 'reference') {
+						inReferenceSection = true;
+						return '<p class="lyric-reference-label">Reference</p>';
+					}
+					if (inReferenceSection) {
+						return `<p class="lyric-reference">${line}</p>`;
+					}
+					return `<p class="lyric-line">${line}</p>`;
+				}).join('');
+			}
+			if (!lyricSong) {
+				if (lyricTitleElement) lyricTitleElement.textContent = 'Song not found';
+				if (lyricContainer) {
+					lyricContainer.innerHTML = '<p class="lyric-line">Choose a song from the songbook to open its lyrics page.</p>';
+				}
+			}
+		});
+	</script>
+</body>
+</html>

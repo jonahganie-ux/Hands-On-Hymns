@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Search and browse the Hands-On Hymns songbook.">
+	<meta name="theme-color" content="#193f70">
+	<title>Songbook | Hands-On Hymns</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/songs.js" defer></script>
+	<script src="js/script.js" defer></script>
+</head>
+<body>
+	<header class="site-header">
+		<a class="brand" href="index.html" aria-label="Hands-On Hymns home">
+			<span class="brand-mark" aria-hidden="true">H</span>
+			<span class="brand-name">Hands-On <strong>Hymns</strong></span>
+		</a>
+		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+			<span class="sr-only">Toggle navigation</span><span></span><span></span>
+		</button>
+		<nav class="site-nav" id="site-nav" data-site-nav aria-label="Main navigation">
+			<a class="nav-link" href="index.html">Home</a>
+			<a class="nav-link is-current" href="songs.html" aria-current="page">Songbook</a>
+			<a class="nav-link" href="about.html">About us</a>
+			<button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to red color theme" title="Switch color theme">
+				<span class="theme-swatches" aria-hidden="true"><i></i><i></i></span><span data-theme-label>Blue</span>
+			</button>
+			<a class="nav-cta" href="songs.html#song-list">Explore songs <span aria-hidden="true">↗</span></a>
+		</nav>
+	</header>
+
+	<main>
+		<section class="songbook-intro page-shell">
+			<p class="eyebrow"><span class="eyebrow-dot"></span> Hands-On Hymns collection</p>
+			<h1>Our <span>songbook.</span></h1>
+			<p class="intro-copy">A growing home for the songs we sing together. Search by title or browse the collection below.</p>
+			<div class="songbook-count"><span class="count-mark" aria-hidden="true">♫</span><strong data-song-count>24</strong><span>songs from our book</span></div>
+		</section>
+
+		<section class="song-list-section page-shell" id="song-list" aria-labelledby="song-list-heading">
+			<div class="song-tools">
+				<label class="search-box">
+					<span class="search-icon" aria-hidden="true">⌕</span>
+					<span class="sr-only">Search song titles</span>
+					<input type="search" placeholder="Search songs…" autocomplete="off" data-song-search>
+					<kbd>⌘ K</kbd>
+				</label>
+				<label class="sort-control"><span>Sort</span>
+					<select data-song-sort aria-label="Sort songs">
+						<option value="book">Songbook order</option>
+						<option value="az">Title A–Z</option>
+					</select>
+				</label>
+			</div>
+			<div class="list-caption"><h2 id="song-list-heading">All songs</h2><span data-result-count>24 songs</span></div>
+			<div class="song-grid" data-song-list aria-live="polite"></div>
+			<p class="empty-state" data-empty-state hidden>No songs match that search. Try another title.</p>
+			<p class="lyrics-note"><span aria-hidden="true">✳</span> Select any title to open its lyrics page and read the song.</p>
+		</section>
+	</main>
+
+	<dialog class="song-dialog" data-song-dialog aria-labelledby="dialog-song-title">
+		<button class="dialog-close" type="button" aria-label="Close song details" data-dialog-close>×</button>
+		<p class="eyebrow"><span class="eyebrow-dot"></span> Hands-On Hymns songbook</p>
+		<h2 id="dialog-song-title" data-dialog-title></h2>
+		<p class="dialog-page" data-dialog-page></p>
+		<div class="dialog-divider"></div>
+		<p class="dialog-message" data-dialog-message></p>
+		<button class="button button-green" type="button" data-dialog-close>Back to songbook</button>
+	</dialog>
+
+	<footer class="site-footer page-shell">
+		<a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">H</span><span class="brand-name">Hands-On <strong>Hymns</strong></span></a>
+		<p>Made to keep our songs close.</p>
+		<span class="footer-copy">© <span data-current-year>2026</span> Hands-On Hymns</span>
+	</footer>
+</body>
+</html>
